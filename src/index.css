@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { @apply bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100; }
+.card { @apply rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900; }
+.btn { @apply px-3 py-2 rounded-lg text-sm font-semibold transition; }
+.btn-ghost { @apply border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800; }
+.btn-brand { @apply bg-brand text-neutral-900 hover:brightness-110; }
+.tab { @apply px-3 py-2 rounded-lg text-sm border border-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800; }
+.tab-active { @apply bg-neutral-900 text-white dark:bg-white dark:text-neutral-900; }
+.badge { @apply text-xs px-2 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800; }
+.table { @apply w-full text-sm; }
+.table th { @apply text-left py-2 border-b border-neutral-200 dark:border-neutral-800; }
+.table td { @apply py-2 border-b border-neutral-200 dark:border-neutral-800; }
+.input { @apply w-full px-3 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 outline-none border border-transparent focus:border-brand; }
+.select { @apply px-3 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 outline-none; }
+
+/* Requested tweaks */
+.btn-reset { @apply bg-red-600 text-white rounded-full px-3 py-2 hover:brightness-110; }
+.theme-icon-btn { @apply rounded-full p-2 w-11 h-11 flex items-center justify-center border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800; }
+.header-logo { @apply w-7 h-7 rounded-full object-cover; }
+
+
+/* Trivex: pretty switches for Settings */
+.switch-btn { @apply flex items-center gap-2 px-3 py-2 rounded-full border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition; }
+.switch-btn.active { @apply bg-brand text-neutral-900 border-brand; }
