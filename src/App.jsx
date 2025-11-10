@@ -47,7 +47,7 @@ const I18N = {
     orderPlaced:'Ордер виконано', buyShort:'Купівля', sellShort:'Продаж', amount:'Сума', side:'Сторона',
     notesBullets: [
       '10-секундні свічки з живим оновленням.',
-      'Вплив угод на ринок: ±1% на кожні 100 UAX.',
+      'Вплив угод на ринок: ±0.5% на кожні 100 UAX.',
       'Темна/світла тема, компактний стакан.',
       'Поточна ціна відображається плаваючою лінією.'
     ]
@@ -61,7 +61,7 @@ const I18N = {
     orderPlaced:'Order executed', buyShort:'Buy', sellShort:'Sell', amount:'Amount', side:'Side',
     notesBullets: [
       '10-second candles with live updates.',
-      'Trade impact: ±1% per every 100 UAX.',
+      'Trade impact: ±0.5% per every 100 UAX.',
       'Dark/Light theme, compact depth.',
       'Floating line shows the current price.'
     ]
