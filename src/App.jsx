@@ -354,7 +354,7 @@ function MarketsPage({
           {/* Графік — трохи більший, але ще влізає на ПК без скролу */}
           <div className="lg:flex-1 lg:flex lg:items-stretch">
             <div className="w-full">
-              <CandleChart candles={candles} height={340} />
+              <CandleChart candles={candles} height={360} />
             </div>
           </div>
         </div>
