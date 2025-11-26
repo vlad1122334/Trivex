@@ -322,59 +322,83 @@ function TradePanel({ t, sym, price, balance, setBalance, holdings, setHoldings,
 }
 
 /** ================= Pages ================= */
-function MarketsPage({ t, active, setActive, charts, balance, setBalance, holdings, setHoldings, onImpact, addOrder, addActivity }){
-  const candles = charts[active]||[];
-  const last = candles[candles.length-1]||{c:0};
+function MarketsPage({
+  t, active, setActive,
+  charts, balance, setBalance,
+  holdings, setHoldings,
+  onImpact, addOrder, addActivity
+}) {
+  const candles = charts[active] || [];
+  const last = candles[candles.length - 1] || { c: 0 };
   const mid = last.c;
+
   return (
-    <div className="p-4 space-y-3">
+    <div className="p-4 space-y-3 lg:h-[calc(100vh-120px)] lg:overflow-hidden">
+      {/* Вкладки активів */}
       <AssetTabs assets={ASSETS} active={active} setActive={setActive} />
-      <div className="grid lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2 space-y-3">
+
+      {/* Основний лейаут: зліва графік, справа ордери + примітки (+ стакан тільки на ПК) */}
+      <div className="lg:grid lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.9fr)] lg:gap-4 lg:h-full">
+        {/* ЛІВА КОЛОНКА: заголовок + графік */}
+        <div className="space-y-3 order-1 lg:order-1 lg:flex lg:flex-col lg:h-full">
           <div className="flex items-center justify-between">
-            <div className="text-lg font-semibold flex items-center gap-2">{t.asset}: {active} <span className="badge">{t.seconds10} • {t.candles}</span></div>
-            <div className="text-sm opacity-80">{t.last}: <b>{fmt(mid,2)}</b></div>
-          </div>
-          <CandleChart candles={candles} />
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="card p-4">
-              <div className="mb-2 text-sm font-semibold">{t.miniDepth}</div>
-              <Depth mid={mid} />
+            <div className="text-base sm:text-lg font-semibold flex items-center gap-2">
+              {t.asset}: {active}
+              <span className="badge">{t.seconds10} • {t.candles}</span>
             </div>
-            <div className="card p-4">
-              <div className="mb-2 text-sm font-semibold">{t.orderPanel}</div>
-              <TradePanel
-                t={t} sym={active} price={mid}
-                balance={balance} setBalance={setBalance}
-                holdings={holdings} setHoldings={setHoldings}
-                onImpact={onImpact} addOrder={addOrder} addActivity={addActivity}
-              />
+            <div className="text-xs sm:text-sm opacity-80">
+              {t.last}: <b>{fmt(mid, 2)}</b>
+            </div>
+          </div>
+
+          {/* Графік — трохи більший, але ще влізає на ПК без скролу */}
+          <div className="lg:flex-1 lg:flex lg:items-stretch">
+            <div className="w-full">
+              <CandleChart candles={candles} height={340} />
             </div>
           </div>
         </div>
-        <div className="space-y-3">
+
+        {/* ПРАВА КОЛОНКА: панель ордерів, стакан (тільки ПК), примітки */}
+        <div className="space-y-3 order-2 lg:order-2 lg:flex lg:flex-col lg:h-full">
+          {/* Панель ордерів – і на ПК, і на телефоні */}
           <div className="card p-4">
-            <div className="text-sm font-semibold mb-2">{t.portfolio}</div>
-            <ul className="text-sm space-y-1">
-              {ASSETS.map(a=>{
-                const q = holdings[a.symbol]||0;
-                const p = (charts[a.symbol]||[]).slice(-1)[0]?.c||0;
-                const v = q*p;
-                return <li key={a.symbol} className="flex justify-between"><span>{a.symbol}</span><span>{q} • {fmt(v,2)} UAX</span></li>
-              })}
-            </ul>
+            <div className="mb-2 text-sm font-semibold">{t.orderPanel}</div>
+            <TradePanel
+              t={t}
+              sym={active}
+              price={mid}
+              balance={balance}
+              setBalance={setBalance}
+              holdings={holdings}
+              setHoldings={setHoldings}
+              onImpact={onImpact}
+              addOrder={addOrder}
+              addActivity={addActivity}
+            />
           </div>
+
+          {/* Стакан: ТІЛЬКИ НА ПК (hidden на мобілці) */}
+          <div className="card p-4 hidden lg:block">
+            <div className="mb-2 text-sm font-semibold">{t.miniDepth}</div>
+            <Depth mid={mid} />
+          </div>
+
+          {/* Примітки – завжди є, і на ПК, і на телефоні */}
           <div className="card p-4">
-            <div className="text-sm font-semibold mb-2">{t.notes}</div>
+            <div className="mb-2 text-sm font-semibold">{t.notes}</div>
             <ul className="list-disc ml-5 text-xs leading-5 opacity-80">
-              {t.notesBullets.map((b,i)=>(<li key={i}>{b}</li>))}
+              {t.notesBullets.map((b, i) => (
+                <li key={i}>{b}</li>
+              ))}
             </ul>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
+
 
 function PortfolioPage({ t, charts, holdings }){
   const rows = ASSETS.map(a=>{
