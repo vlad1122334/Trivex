@@ -47,7 +47,7 @@ const I18N = {
     orderPlaced:'Ордер виконано', buyShort:'Купівля', sellShort:'Продаж', amount:'Сума', side:'Сторона',
     notesBullets: [
       '10-секундні свічки з живим оновленням.',
-      'Вплив угод на ринок: ±0.5% на кожні 100 UAX.',
+      'Вплив угод на ринок: ±1% на кожні 100 UAX.',
       'Темна/світла тема, компактний стакан.',
       'Поточна ціна відображається плаваючою лінією.'
     ]
@@ -61,7 +61,7 @@ const I18N = {
     orderPlaced:'Order executed', buyShort:'Buy', sellShort:'Sell', amount:'Amount', side:'Side',
     notesBullets: [
       '10-second candles with live updates.',
-      'Trade impact: ±0.5% per every 100 UAX.',
+      'Trade impact: ±1% per every 100 UAX.',
       'Dark/Light theme, compact depth.',
       'Floating line shows the current price.'
     ]
@@ -172,26 +172,30 @@ function ThemeIcon({ theme }){
 
 function Header({ t, theme, setTheme, balance, onReset }){
   return (
-    <div className="flex items-center justify-between py-3 px-4 border-b border-neutral-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60 backdrop-blur sticky top-0 z-30">
-      <div className="flex items-center gap-3">
-        <img src={logo} alt="Trivex" className="header-logo" />
-        <div className="text-xl font-semibold tracking-wide">TRIVEX</div>
-        <span className="badge">{t.demo}</span>
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between py-3 px-3 sm:px-4 border-b border-neutral-200 dark:border-neutral-800 bg-white/60 dark:bg-neutral-900/60 backdrop-blur sticky top-0 z-30">
+      <div className="flex items-center gap-2">
+        <img src={logo} alt="Trivex" className="header-logo w-7 h-7 sm:w-8 sm:h-8" />
+        <div className="text-lg sm:text-xl font-semibold tracking-wide">TRIVEX</div>
+        <span className="badge text-[10px] sm:text-xs">{t.demo}</span>
       </div>
-      <div className="flex items-center gap-2 text-sm">
-        <div>{t.balance}: <b>{fmt(balance,2)} UAX</b></div>
-        <button onClick={onReset} className="btn-reset text-xs">{t.reset}</button>
+
+      <div className="flex items-center justify-between sm:justify-end gap-2 text-xs sm:text-sm flex-wrap">
+        <div className="truncate max-w-[160px] sm:max-w-none">
+          {t.balance}: <b>{fmt(balance,2)} UAX</b>
+        </div>
+        <button onClick={onReset} className="btn-reset text-[10px] sm:text-xs">{t.reset}</button>
         <button
-  className="theme-icon-btn switch-btn"
-  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-  title={theme === 'dark' ? t.darkOn : t.lightOn}
->
-  <ThemeIcon theme={theme} />
-</button>
+          className="theme-icon-btn switch-btn"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          title={theme === 'dark' ? t.darkOn : t.lightOn}
+        >
+          <ThemeIcon theme={theme} />
+        </button>
       </div>
     </div>
   )
 }
+
 
 function TopTabs({ t, active, setActive }){
   const tabs = [t.markets, t.portfolio, t.orders, t.activity, t.leaders, t.news, t.settings];
